@@ -6,18 +6,21 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import java.text.NumberFormat
 import java.util.Locale
-import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var etPeso: EditText
     private lateinit var etAltura: EditText
     private lateinit var tvResultado: TextView
+    private lateinit var tvClassificacao: TextView
     private lateinit var btCalcular: Button
     private lateinit var btLimpar: Button
 
@@ -25,88 +28,84 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        setupWindowInsets()
+        setupViews()
+        setupObservers()
+        setupListeners()
+    }
+
+    private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
 
+    private fun setupViews() {
         etPeso = findViewById(R.id.etPeso)
         etAltura = findViewById(R.id.etAltura)
         tvResultado = findViewById(R.id.tvResultado)
+        tvClassificacao = findViewById(R.id.tvClassificacao)
         btCalcular = findViewById(R.id.btCalcular)
         btLimpar = findViewById(R.id.btLimpar)
+    }
 
+    private fun setupObservers() {
+        viewModel.bmiResult.observe(this) { result ->
+            tvResultado.text = formatarResultado(result.imc)
+            tvClassificacao.text = getString(result.classificationResId)
+        }
+    }
+
+    private fun setupListeners() {
         btCalcular.setOnClickListener {
-            btCalcularOnclick()
+            val peso = etPeso.text.toString().toDoubleOrNull()
+            val altura = etAltura.text.toString().toDoubleOrNull()
+
+            if (validarCampos(peso, altura)) {
+                viewModel.calcular(peso!!, altura!!, Locale.getDefault().language)
+            }
         }
 
         btCalcular.setOnLongClickListener {
-            Toast.makeText(
-                this,
-                getString(R.string.calcular_clique_longo),
-                Toast.LENGTH_LONG
-            ).show()
-
+            Toast.makeText(this, getString(R.string.calcular_clique_longo), Toast.LENGTH_LONG).show()
             true
         }
 
         btLimpar.setOnClickListener {
-            btLimparOnClick()
+            limparCampos()
         }
     }
 
-    private fun btCalcularOnclick() {
-        val convertedPeso = etPeso.text.toString().toDoubleOrNull()
-        val convertedAltura = etAltura.text.toString().toDoubleOrNull()
-
-        if (convertedPeso == null) {
+    private fun validarCampos(peso: Double?, altura: Double?): Boolean {
+        if (peso == null) {
             etPeso.error = getString(R.string.erro_peso)
-            return
+            return false
         }
-
-        if (convertedAltura == null) {
+        if (altura == null) {
             etAltura.error = getString(R.string.erro_altura)
-            return
+            return false
         }
-
-        if (convertedAltura == 0.0) {
+        if (altura == 0.0) {
             etAltura.error = getString(R.string.erros_zeros_altura)
-            return
+            return false
         }
+        return true
+    }
 
-        val idioma = Locale.getDefault().language
-
-        val imc = calcularIMC(convertedPeso, convertedAltura, idioma)
-
+    private fun formatarResultado(imc: Double): String {
         val nf = NumberFormat.getNumberInstance(Locale.getDefault())
         nf.minimumFractionDigits = 2
         nf.maximumFractionDigits = 2
-        val resultado = nf.format(imc)
-
-        tvResultado.text = resultado
+        return nf.format(imc)
     }
 
-    companion object {
-        fun calcularIMC(
-            convertedPeso: Double,
-            convertedAltura: Double,
-            idioma: String
-        ): Double {
-            if (idioma == "en") {
-                return 703 * (convertedPeso / convertedAltura.pow(2))
-            }
-
-            return convertedPeso / convertedAltura.pow(2)
-        }
-    }
-
-    private fun btLimparOnClick() {
+    private fun limparCampos() {
         etPeso.setText("")
         etAltura.setText("")
-
         tvResultado.text = getString(R.string.zeros)
-
+        tvClassificacao.text = ""
         etPeso.requestFocus()
     }
 }

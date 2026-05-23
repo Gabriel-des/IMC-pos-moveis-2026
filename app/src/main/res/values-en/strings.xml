@@ -16,4 +16,11 @@
 
     <string name="calcular">Calculate</string>
     <string name="limpar">Clear</string>
+
+    <string name="abaixo_peso">Underweight</string>
+    <string name="peso_normal">Healthy weight</string>
+    <string name="sobrepeso">Overweight</string>
+    <string name="obesidade_grau_1">Obesity Class 1</string>
+    <string name="obesidade_grau_2">Obesity Class 2</string>
+    <string name="obesidade_grau_3">Severe obesity</string>
 </resources>

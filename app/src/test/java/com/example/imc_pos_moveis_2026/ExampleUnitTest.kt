@@ -7,31 +7,28 @@ class ExampleUnitTest {
 
     @Test
     fun calcularIMC_metrico_isCorrect() {
-        val resultado = MainActivity.calcularIMC(90.0, 1.9, "pt")
+        val resultado = BmiDomain.calcularIMC(90.0, 1.9, "pt")
         assertEquals(24.93, resultado, 0.01)
     }
 
     @Test
+    fun classificarIMC_isCorrect() {
+        // Teste de algumas faixas
+        assertEquals(R.string.abaixo_peso, BmiDomain.classificarIMC(17.0))
+        assertEquals(R.string.peso_normal, BmiDomain.classificarIMC(22.0))
+        assertEquals(R.string.sobrepeso, BmiDomain.classificarIMC(27.0))
+        assertEquals(R.string.obesidade_grau_1, BmiDomain.classificarIMC(32.0))
+    }
+
+    @Test
     fun calcularIMC_imperial_isCorrect() {
-        val resultado = MainActivity.calcularIMC(150.0, 70.0, "en")
+        val resultado = BmiDomain.calcularIMC(150.0, 70.0, "en")
         assertEquals(21.52, resultado, 0.01)
     }
 
     @Test
-    fun calcularIMC_limite_abaixo_peso() {
-        val resultado = MainActivity.calcularIMC(50.0, 1.8, "pt")
-        assertTrue(resultado < 18.5)
-    }
-
-    @Test
-    fun calcularIMC_limite_sobrepeso() {
-        val resultado = MainActivity.calcularIMC(85.0, 1.7, "pt")
-        assertTrue(resultado in 25.0..29.9)
-    }
-
-    @Test
     fun calcularIMC_altura_zero_retorna_infinito() {
-        val resultado = MainActivity.calcularIMC(70.0, 0.0, "pt")
+        val resultado = BmiDomain.calcularIMC(70.0, 0.0, "pt")
         assertTrue(resultado.isInfinite())
     }
 }

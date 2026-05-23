@@ -16,4 +16,11 @@
 
     <string name="calcular">Calcular</string>
     <string name="limpar">Limpar</string>
+
+    <string name="abaixo_peso">Abaixo do peso</string>
+    <string name="peso_normal">Peso normal</string>
+    <string name="sobrepeso">Sobrepeso</string>
+    <string name="obesidade_grau_1">Obesidade Grau 1</string>
+    <string name="obesidade_grau_2">Obesidade Grau 2</string>
+    <string name="obesidade_grau_3">Obesidade Grau 3</string>
 </resources>

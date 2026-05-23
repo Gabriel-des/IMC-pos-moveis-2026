@@ -70,20 +70,30 @@
         app:layout_constraintStart_toEndOf="@id/tvImc"
         app:layout_constraintTop_toBottomOf="@id/etAltura"/>
 
+    <TextView
+        android:id="@+id/tvClassificacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvResultado"
+        tools:text="Peso Normal" />
+
     <Button
         android:id="@+id/btCalcular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/calcular"
         app:layout_constraintStart_toEndOf="@id/tvImc"
-        app:layout_constraintTop_toBottomOf="@id/tvResultado" />
+        app:layout_constraintTop_toBottomOf="@id/tvClassificacao" />
 
     <Space
         android:id="@+id/espacoBotoes"
         android:layout_width="16dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/btCalcular"
-        app:layout_constraintTop_toBottomOf="@id/tvResultado" />
+        app:layout_constraintTop_toBottomOf="@id/tvClassificacao" />
 
     <Button
         android:id="@+id/btLimpar"
@@ -91,6 +101,6 @@
         android:layout_height="wrap_content"
         android:text="@string/limpar"
         app:layout_constraintStart_toEndOf="@id/espacoBotoes"
-        app:layout_constraintTop_toBottomOf="@id/tvResultado" />
+        app:layout_constraintTop_toBottomOf="@id/tvClassificacao" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
