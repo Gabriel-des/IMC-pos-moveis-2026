@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">IMC-pos-moveis-2026</string>
+    <string name="peso">Peso:</string>
+    <string name="altura">Altura:</string>
+    <string name="imc">IMC:</string>
+
+    <string name="erro_peso">Campo peso deve ser preenchido.</string>
+    <string name="erro_altura">Campo altura deve ser preenchido.</string>
+    <string name="erros_zeros_altura">Altura não pode ser 0.</string>
+    <string name="calcular_clique_longo">Botão para calcular o IMC</string>
+
+    <string name="hint_peso">Peso em kg</string>
+    <string name="hint_altura">Altura em metros</string>
+
+    <string name="zeros">0,00</string>
+
+    <string name="calcular">Calcular</string>
+    <string name="limpar">Limpar</string>
+</resources>
